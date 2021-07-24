@@ -46,6 +46,8 @@ def step_function(x):
 def sigmoid(x):
     return 1/(1+np.exp(-x))      #브로드 캐스트 적용, 각 배열의 원소값에 대해 계산 후 결과값들을 배열로 변환
 
+def ReLU(x):
+    return np.array(np.maximum(0, x))
 '''
 print(AND(0,0))
 print(AND(1,0))
@@ -68,11 +70,19 @@ print(XOR(0,1))
 print(XOR(1,1))
 '''
 x=np.arange(-5,5,0.1)          #최대 최소 간격 : 만큼의 numpy 배열을 형성
-y=sigmoid(x)
+y=ReLU(x)
 
-print(y)
+#print(y)
 
-plt.plot(x,y)
-plt.ylim(-0.1,1.1)
-plt.show()
+A = np.array([[1,2],[3,4]])
+print(A)
+print(A.shape)
+B=np.array([[5,6],[7,8]])
+print(B.shape)
+print(np.dot(A,B))
+
+
+#plt.plot(x,y)
+#plt.ylim(-0.1,1.1)
+#plt.show()
 
