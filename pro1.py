@@ -49,47 +49,51 @@ def sigmoid(x):
 def ReLU(x):
     return np.array(np.maximum(0, x))
 
+def softmax(x):     #c는 입력 값 중 최대
+    c=np.max(x)
+    exp_x=np.exp(x-c)
+    sum_exp_x=sum(exp_x)
+
+    y = exp_x/sum_exp_x      #return exp_x/sum_exp_x로 바로 나타낼 수도 있지만 "가시성"을 위해 y로 따로 배정하여 계산
+    return y
+
+def identity_function(x):
+    return x
+
 def init_network():       #network 배열에 라벨링을 통해 각 가중치 및 편향 저장
     network={}
-    network['W1']=np.array([0.1,0.3,0.5],[0.2,0.4,0.6])
+    network['W1']=np.array([[0.1,0.3,0.5],[0.2,0.4,0.6]])
     network['b1']=np.array([0.1, 0.2, 0.3])
-    network['W2']=np.array([0.1,0.4],[0.2,0.5],[0.3,0.6])
+    network['W2']=np.array([[0.1,0.4],[0.2,0.5],[0.3,0.6]])
     network['b2']=np.array([0.1,0.2])
-    network['W3']=np.array([0.1,0.3],[0.2,0.4])
+    network['W3']=np.array([[0.1,0.3],[0.2,0.4]])
     network['b3']=np.array([0.1,0.2])
 
     return network
 
-def forward(network, x):
+def forward(network, x):      #순방향(입력->출력) 구현   항상 비슷한 값을 도출한다.
     W1,W2, W3= network['W1'], network['W2'], network['W3']
     b1,b2,b3=network['b1'],network['b2'],network['b3']
 
-    a1=np.dot(x,W1)+b1
-    z1=sigmoid(a1)
+    a1 = np.dot(x,W1)+b1
+    z1 = softmax(a1)
     a2 = np.dot(z1, W2) + b2
-    z2 = sigmoid(a2)
+    z2 = softmax(a2)
     a3 = np.dot(z2, W3) + b3
     y=identity_function(a3)
 
     return y
 
 network=init_network()
-x=np.array([1.0,0.5])
+
+x=np.array([100,40])
 y=forward(network, x)
 print(y)
 
 
-x=np.arange(-5,5,0.1)          #최대 최소 간격 : 만큼의 numpy 배열을 형성
-y=ReLU(x)
 
 #print(y)
 
-X=np.array([1.0,0.5])
-W1=np.array([0.1,0.3,0.5],[0.2,0.4,0.6])
-B1=np.array([0.1, 0.2, 0.3])
-
-A1=np.dot(X,W1)+B1
-Z1=sigmoid(A1)
 
 
 #plt.plot(x,y)
